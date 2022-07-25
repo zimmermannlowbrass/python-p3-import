@@ -138,6 +138,7 @@ my_package/
 ```
 
 In the top-level `__init__.py` add the following code
+
 ```py
 from . import subpackage1
 from . import subpackage2
@@ -156,17 +157,23 @@ to `module1`.
 ```py
 from .module2 import function1
 ```
+
 Now you can go to the parent directory of `my_package` and import the package.
 Lets use the python repl to demonstrate this. We will execute a function in the `module1`
 called `function1`
 
 ```bash
+$ python3
 $ import my_package
 $ my_package.subpackage1.module1.function1()
 ```
 
-
 If you need to go up multiple levels in the directory structure you can use additional periods.
+
+```py
+from ..module2 import function1
+
+```
 
 Relative imports are great if you have a lot of code that is related.
 
