@@ -101,53 +101,56 @@ project
 └── test.py
 ```
 
-Lets use the above file structure to practice. All the code below will be in `test.py`
+Lets use the above file structure to practice. All the code below will be run
+from `test.py`.
+
+Let's assume that there is a function called `function1()` in each module:
 
 ```py
 # project/test.py
-#Lets assume there is a function called function1 in all these modules. We can import it using the following code
 
 from package1 import module1
 
 module1.function1()
 ```
 
+We can explicitly import this function as follows:
+
 ```py
-#test.py
-# We can explicitly import functions by 
+# project/test.py
 
 from package1.module1 import function1
 
 function1()
 ```
 
-How do we import module 6?
+`module6` is buried a bit deeper- to import its `function1()`, we need to trawl
+through `subpackage1/`:
 
 ```py
-#test.py
-# We can append the path from root to the module6 to the package.  
+# project/test.py
+
 from package1.subpackage1.module6 import function1
 
 function1()
 ```
 
-Pros and cons of absolute imports
+### Pros and Cons of Absolute Imports
 
 Absolute imports remain valid even if the current location of the import
- statement changes. For example, if we move the `test.py` file to a sub
-  directory the imports would still be valid.
+statement changes. For example, if we move the `test.py` file to a sub
+directory the imports would still be valid.
 
-Why should we not use Absolute Imports?
+#### When Should We Not Use Absolute Imports?
 
 Lets say we have want to import a module from a long nested
- directory structure. The import statement
-would be huge.
+directory structure. The import statement would be huge:
 
 ```py
 from package1.subpackage1.subpackage2.subpackage3.module1 import function1
 ```
 
-We can avoid this by using relative imports.
+We can avoid this by using **relative imports**.
 
 ***
 
