@@ -158,23 +158,23 @@ We can avoid this by using **relative imports**.
 
 The reason why relative imports exist is because they allow us
 to rearrange the structure of large packages without having to edit
-  sub-packages. If we rearrange a large package
-with absolute imports we will have to change all the paths in every
- file's import statements to match the new location.
+sub-packages. If we rearrange a large package with absolute imports, we will
+have to change all the paths in every file's import statements to match the new
+location.
 
-Lets use the following directory structure
+Lets use the following directory structure:
 
 ```bash
-my_package/
-    __init__.py
-    subpackage1/
-        __init__.py
-        module1.py
-        module2.py
-    subpackage2/
-        __init__.py
-        module3.py
-    module_4.py
+relative_package
+├── __init__.py
+├── module4.py
+├── subpackage1
+│   ├── __init__.py
+│   ├── module1.py
+│   └── module2.py
+└── subpackage2
+    ├── __init__.py
+    └── module3.py
 ```
 
 In the top-level `__init__.py` add the following code
@@ -191,31 +191,35 @@ from . import module1
 from . import module2
 ```
 
-Now if we want to import `function1` from `module2` in `module1`. We can add the following code
-to `module1`.
+Now if we want to import `function1` from `module2` in `module1`. We can add the
+following code to `module1`:
 
 ```py
 from .module2 import function1
 ```
 
 Now you can go to the parent directory of `my_package` and import the package.
-Lets use the Python repl to demonstrate this. We will execute a function in the `module1`
-called `function1`
+Lets use the Python repl to demonstrate this. We will execute a function in the
+`module1` called `function1`
 
 ```bash
-$ python
->>>import my_package
->>>my_package.subpackage1.module1.function1()
+$ import my_package
+$ my_package.subpackage1.module1.function1()
+# => output
 ```
 
-If you need to go up multiple levels in the directory structure you can use additional periods.
+If you need to go up multiple levels in the directory structure you can use
+additional periods.
 
 ```py
 from ..module2 import function1
 
 ```
 
-Relative imports are great if you have lots of code files that are related.
+Relative imports are great if you have lots of code files that are related, but
+it can be unclear to other developers which modules are kept where. PEP-8
+suggests that you only use relative imports when the absolute path extends past
+79 characters, but it's a good tool to have at your disposal.
 
 ***
 
