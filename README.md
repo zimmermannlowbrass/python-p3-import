@@ -28,49 +28,57 @@ packages, and scripts that you intend to use in your application.
 ## Introduction
 
 As your programs gets longer, you may want to split them into several files
- for easier maintenance. You may also want to use a handy function that you’ve
-  written in several programs without copying its definition into each program.
-   These files are called modules. Things we write in these modules can
-    be **imported** into other modules.
+for easier maintenance. You may also want to use a handy function that you’ve
+written in several programs without copying its definition into each program,
+or functions that others wrote to save you a bit of development time.
+All imports start from files (also called **modules**). Using the **import**
+keyword, we can access whole modules or the classes, functions, and objects
+inside from any other module.
 
 ***
 
 ## Importing a module
 
-Lets use the Python os module as an example.
+Lets use the Python `os` module as an example.
 We will use the name property to demonstrate the different ways to import.
 
-```py
-import os
-# After importing we can call the module function.
-os.name
+Open the Python shell and enter the following code:
 
-# os.name should return one of the following depending on your operating system 'posix', 'nt', 'java'
+```console
+$ import os
+$ os.name
+# => 'posix'
 ```
+
+"posix", or the Portable Operating System Interface, is the name of the module
+that code is executed from in the Python shell.
 
 A module may have multiple functions and definitions.
 What if we only want to use a few of them? A more concise way of importing is
 only importing the things we need. Lets say we want to import only the `name`
 property in the `os` module. We can do this by using the from keyword.
 
-```py
-from os import name
-# After importing the whole module we have to 
-name
+```console
+$ from os import name
+$ name
+# => 'posix'
 ```
 
 Note how we did not need to prepend `os` to the `name`.
 
-The `from` keyword also allows us to import everything from a library using the `*` operator.
+The `from` keyword also allows us to import everything from a library using the
+`*` operator.
 
-```py
-from os import *
-name
+```console
+$ from os import *
+$ name
+# => 'posix'
 ```
 
 This can be bad practice, because it is less concise and you may run
-into namespace issues. When using the `*` operator we don't know exactly
-what we are taking from the module leading to less readable code.
+into namespace issues. (What if we had called another variable `name`?) When
+using the `*` operator we don't know exactly what we are taking from the module,
+leading to less readable code.
 
 ***
 
