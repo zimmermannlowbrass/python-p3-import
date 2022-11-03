@@ -37,7 +37,7 @@ inside from any other module.
 
 ***
 
-## Importing a module
+## Importing a Module
 
 Lets use the Python `os` module as an example.
 We will use the name property to demonstrate the different ways to import.
@@ -89,21 +89,22 @@ An absolute import specifies the module to be imported using the full path
 
 ```bash
 project
-    test.py
-    package1
-        module1.py
-        module2.py
-    package2
-        module3.py
-        module4.py
-        subpackage1────module6.py
-        module5.py
+├── package1
+│   ├── module1.py
+│   └── module2.py
+├── package2
+│   ├── module3.py
+│   ├── module4.py
+│   ├── module5.py
+│   └── subpackage1
+│       └── module6.py
+└── test.py
 ```
 
 Lets use the above file structure to practice. All the code below will be in `test.py`
 
 ```py
-# test.py
+# project/test.py
 #Lets assume there is a function called function1 in all these modules. We can import it using the following code
 
 from package1 import module1
