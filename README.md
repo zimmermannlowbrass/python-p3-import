@@ -98,16 +98,16 @@ project
 │   ├── module5.py
 │   └── subpackage1
 │       └── module6.py
-└── test.py
+└── import_test.py
 ```
 
 Lets use the above file structure to practice. All the code below will be run
-from `test.py`.
+from `import_test.py`.
 
 Let's assume that there is a function called `function1()` in each module:
 
 ```py
-# project/test.py
+# project/import_test.py
 
 from package1 import module1
 
@@ -117,7 +117,7 @@ module1.function1()
 We can explicitly import this function as follows:
 
 ```py
-# project/test.py
+# project/import_test.py
 
 from package1.module1 import function1
 
@@ -128,7 +128,7 @@ function1()
 through `subpackage1/`:
 
 ```py
-# project/test.py
+# project/import_test.py
 
 from package1.subpackage1.module6 import function1
 
@@ -138,7 +138,7 @@ function1()
 ### Pros and Cons of Absolute Imports
 
 Absolute imports remain valid even if the current location of the import
-statement changes. For example, if we move the `test.py` file to a sub
+statement changes. For example, if we move the `import_test.py` file to a sub
 directory the imports would still be valid.
 
 #### When Should We Not Use Absolute Imports?
