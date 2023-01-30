@@ -130,7 +130,7 @@ through `subpackage1/`:
 ```py
 # project/import_test.py
 
-from package1.subpackage1.module6 import function1
+from package2.subpackage1.module6 import function1
 
 function1()
 ```
