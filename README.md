@@ -2,7 +2,7 @@
 
 ## Learning Goals
 
-- Importing modules
+- Importing modules using absolute and relative imports.
 
 ***
 
@@ -35,6 +35,8 @@ All imports start from files (also called **modules**). Using the **import**
 keyword, we can access whole modules or the classes, functions, and objects
 inside from any other module.
 
+Run `pipenv install` and `pipenv shell` to enter the virtual environment.
+
 ***
 
 ## Importing a Module
@@ -45,8 +47,9 @@ We will use the name property to demonstrate the different ways to import.
 Open the Python shell and enter the following code:
 
 ```console
-$ import os
-$ os.name
+$ python
+>>> import os
+>>> os.name
 # => 'posix'
 ```
 
@@ -59,8 +62,9 @@ only importing the things we need. Lets say we want to import only the `name`
 property in the `os` module. We can do this by using the from keyword.
 
 ```console
-$ from os import name
-$ name
+$ python
+>>> from os import name
+>>> name
 # => 'posix'
 ```
 
@@ -70,8 +74,9 @@ The `from` keyword also allows us to import everything from a library using the
 `*` operator.
 
 ```console
-$ from os import *
-$ name
+$ python
+>>> from os import *
+>>> name
 # => 'posix'
 ```
 
@@ -88,7 +93,7 @@ An absolute import specifies the module to be imported using the full path
  from the project root directory.
 
 ```bash
-project
+absolute_package
 ├── package1
 │   ├── module1.py
 │   └── module2.py
@@ -98,48 +103,42 @@ project
 │   ├── module5.py
 │   └── subpackage1
 │       └── module6.py
-└── import_test.py
 ```
 
 Lets use the above file structure to practice. All the code below will be run
-from `import_test.py`.
+in the Python REPL. Change directory into the absolute_package directory.
+To activate the REPL run `python` in the terminal.
 
 Let's assume that there is a function called `function1()` in each module:
 
-```py
-# project/import_test.py
-
-from package1 import module1
-
-module1.function1()
+```console
+$ pytest
+>>> from package1 import module1
+>>> module1.function1()
 ```
 
 We can explicitly import this function as follows:
 
-```py
-# project/import_test.py
-
-from package1.module1 import function1
-
-function1()
+```console
+$ console
+>>> from package1.module1 import function1
+>>> function1()
 ```
 
-`module6` is buried a bit deeper- to import its `function1()`, we need to trawl
-through `subpackage1/`:
+`module6` is buried a bit deeper- to import its `function1()`, we need to crawl
+through `subpackage1/` in `package2`:
 
-```py
-# project/import_test.py
-
-from package1.subpackage1.module6 import function1
-
-function1()
+```console
+$python
+>>> from package2.subpackage1.module6 import function1
+>>> function1()
 ```
 
 ### Pros and Cons of Absolute Imports
 
 Absolute imports remain valid even if the current location of the import
-statement changes. For example, if we move the `import_test.py` file to a sub
-directory the imports would still be valid.
+statement changes and they make it easy to see exactly where the resource
+is coming from.
 
 #### When Should We Not Use Absolute Imports?
 
@@ -158,7 +157,7 @@ We can avoid this by using **relative imports**.
 
 The reason why relative imports exist is because they allow us
 to rearrange the structure of large packages without having to edit
-sub-packages. If we rearrange a large package with absolute imports, we will
+sub-packages. If we rearrange a large package with absolute imports, we
 have to change all the paths in every file's import statements to match the new
 location.
 
@@ -167,53 +166,58 @@ Lets use the following directory structure:
 ```bash
 relative_package
 ├── __init__.py
-├── module4.py
 ├── subpackage1
-│   ├── __init__.py
-│   ├── module1.py
-│   └── module2.py
-└── subpackage2
-    ├── __init__.py
-    └── module3.py
+    | subpackage2
+    │   ├── __init__.py
+    │   ├── module1.py
+    │   └── module2.py
+    module3.py
 ```
 
-In the top-level `__init__.py` add the following code
+Lets add the following code to `module1`:
 
 ```py
-from . import subpackage1
-from . import subpackage2
+def function1():
+    print('Function 1 from module1')
 ```
 
-Go to the `__init__.py` file in the `subpackage1` module and add the following code:
+and lets add the following code to `module2`
 
 ```py
-from . import module1
-from . import module2
+from .module1 import function1
+
+function1()
 ```
 
-Now if we want to import `function1` from `module2` in `module1`. We can add the
-following code to `module1`:
-
-```py
-from .module2 import function1
-```
-
-Now you can go to the parent directory of `my_package` and import the package.
-Lets use the Python repl to demonstrate this. We will execute a function in the
-`module1` called `function1`
+Now you can change directory to the parent directory of `subpackage1`.
+We can run `module2` as a module using the following command.
 
 ```bash
-$ import my_package
-$ my_package.subpackage1.module1.function1()
-# => output
+$ python -m subpackage1.subpackage2.module2
+# => Function 1 from module1
 ```
 
+Relative Imports only work when we use them in a module. Which is why we need to include
+the `-m` argument. Relative imports cannot be invoked in scripts.
+
 If you need to go up multiple levels in the directory structure you can use
-additional periods.
+additional dots.
+
+In module2 we can import module3 using two dots which represents the parent directory that module3 is in.
+In this example we import the entire module not just one function like the last example.
 
 ```py
-from ..module2 import function1
+from .module1 import function1
+from .. import module3
 
+function1()
+module3.function1()
+```
+
+```bash
+$ python -m subpackage1.subpackage2.module2
+# => Function 1 from module1
+# => Function 1 from module3
 ```
 
 Relative imports are great if you have lots of code files that are related, but
