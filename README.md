@@ -132,6 +132,7 @@ through `subpackage1/` in `package2`:
 $python
 >>> from package2.subpackage1.module6 import function1
 >>> function1()
+
 ```
 
 ### Pros and Cons of Absolute Imports
