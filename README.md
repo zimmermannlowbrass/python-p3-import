@@ -46,7 +46,7 @@ We will use the name property to demonstrate the different ways to import.
 
 Open the Python shell and enter the following code:
 
-```console
+```bash
 $ python
 >>> import os
 >>> os.name
@@ -61,7 +61,7 @@ What if we only want to use a few of them? A more concise way of importing is
 only importing the things we need. Lets say we want to import only the `name`
 property in the `os` module. We can do this by using the from keyword.
 
-```console
+```bash
 $ python
 >>> from os import name
 >>> name
@@ -73,7 +73,7 @@ Note how we did not need to prepend `os` to the `name`.
 The `from` keyword also allows us to import everything from a library using the
 `*` operator.
 
-```console
+```bash
 $ python
 >>> from os import *
 >>> name
@@ -106,33 +106,35 @@ absolute_package
 ```
 
 Lets use the above file structure to practice. All the code below will be run
-in the Python REPL. Change directory into the absolute_package directory.
+in the Python REPL. Change directory into the `absolute_package/` directory.
 To activate the REPL run `python` in the terminal.
 
 Let's assume that there is a function called `function1()` in each module:
 
-```console
-$ pytest
+```bash
+$ python
 >>> from package1 import module1
 >>> module1.function1()
+# => Function 1 in module 1
 ```
 
 We can explicitly import this function as follows:
 
-```console
-$ console
+```bash
+$ python
 >>> from package1.module1 import function1
 >>> function1()
+# => Function 1 in module 1
 ```
 
 `module6` is buried a bit deeper- to import its `function1()`, we need to crawl
 through `subpackage1/` in `package2`:
 
-```console
-$python
+```bash
+$ python
 >>> from package2.subpackage1.module6 import function1
 >>> function1()
-
+# => Function 1 in module 6
 ```
 
 ### Pros and Cons of Absolute Imports
@@ -175,16 +177,16 @@ relative_package
     module3.py
 ```
 
-Lets add the following code to `module1`:
+Lets say `module1` and `module2` have the following code:
 
 ```py
+# module 1
 def function1():
     print('Function 1 from module1')
 ```
 
-and lets add the following code to `module2`
-
 ```py
+# module 2
 from .module1 import function1
 
 function1()
