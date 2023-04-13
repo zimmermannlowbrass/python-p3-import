@@ -27,7 +27,7 @@ packages, and scripts that you intend to use in your application.
 
 ## Introduction
 
-As your programs gets longer, you may want to split them into several files
+As your programs get longer, you may want to split them into several files
 for easier maintenance. You may also want to use a handy function that you’ve
 written in several programs without copying its definition into each program,
 or functions that others wrote to save you a bit of development time.
